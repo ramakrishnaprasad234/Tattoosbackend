@@ -1,17 +1,18 @@
 
 const route = require('express')
 const router = route.Router();
-const registraionvalidator = require('../middlewares/registraionvalidator.js')
-const OtpGenerate = require('../controller/registerotp.js')
-const {signup, bill} = require('../controller/appcontroller.js')
-const registerUser = require('../controller/registration.js')
-const { successResponse, errorResponse } = require("../utils/response.js");
-const{register} = require('../controller/auth.js');
-const  messages  = require('../utils/constant.js');
-const registerotp = require('../middlewares/registerotp.js');
-const { required } = require('../utils/registartion.joi.js');
- const  otpverify = require('../middlewares/verifyotp.js')
- const verifyotp = require('../controller/verifyotp.js')
+const registraionvalidator = require('../../middlewares/registraionvalidator.js')
+const OtpGenerate = require('../../controller/registerotp.js')
+const {signup, bill} = require('../../controller/appcontroller.js')
+const registerUser = require('../../controller/registration.js')
+const { successResponse, errorResponse } = require("../../utils/response.js");
+const{register} = require('../../controller/auth.js');
+const  messages  = require('../../utils/constant.js');
+const registerotp = require('../../middlewares/registerotp.js');
+const { required } = require('../../utils/registartion.joi.js');
+ const  otpverify = require('../../middlewares/verifyotp.js')
+ const verifyotp = require('../../controller/verifyotp.js')
+ const shopbycity = require('../../controller/user/shopbycity.js')
  // router.post('/user/signup',signup)
 
  // router.post('/user/bill',bill)
@@ -52,6 +53,17 @@ const { required } = require('../utils/registartion.joi.js');
 
       catch (error) {
         console.log(error)
+      }
+    })
+
+    router.get('/getshopsbycity',async(req,res)=>{
+      let response
+      try{
+        response = await shopbycity(req);
+        return res.status(response.code).json(response);
+      }
+      catch(error){
+       console.log(error)
       }
     })
 

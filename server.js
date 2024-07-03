@@ -1,6 +1,6 @@
 const express = require('express');
 //const mongoose = require('mongoose');
-   const approute = require("./routes/route")
+   const approute = require("./routes/user/route")
    // const approute = require('../../medicine backend/routes/route.js')
 const app = express();
 const mongodb = require('./database/database')
