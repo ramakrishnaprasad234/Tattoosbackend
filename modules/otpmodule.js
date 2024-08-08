@@ -15,7 +15,7 @@ const otpschema = new Schema({
     },
     otp_user_uuid: {
         type: String,
-        required: true,
+        // required: true,
         unique: true
     },
     otp_count: {

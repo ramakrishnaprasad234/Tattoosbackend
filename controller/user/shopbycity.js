@@ -1,11 +1,11 @@
 
 const {successResponse,errorResponse} = require('../../utils/response')
 const ShopModel = require('../../modules/admin/addshop')
-const shopbycity = async (req,res) =>{
 const messages = require('../../utils/constant')
+const shopbycity = async (req,res) =>{
 
 
-
+    
 
 
     const city = req.query.city;
