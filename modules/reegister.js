@@ -13,21 +13,21 @@ const userSchema = new schema({
         unique: true,
         default: uuidv4(),
     },
-    user_full_name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+    // user_full_name: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    // },
     user_email: {
         type: String,
         required: true,
         unique: true,
     },
-    user_mobile: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+    // user_mobile: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    // },
     user_verified: {
         type: Boolean,
         default: false
