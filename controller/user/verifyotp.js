@@ -7,7 +7,7 @@ const verifyotp = async(req,res)=>{
    const otp = req.body.otp
 
    const user = await usermodule.findOne({user_email:email})
-
+    
     if(!user) return errorResponse(404, messages.error.USER_NOT_FOUND, {})
 
         const otpData = await OtpModel.findOne({otp_user_uuid: user.user_uuid})

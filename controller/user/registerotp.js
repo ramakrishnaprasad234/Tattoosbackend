@@ -28,8 +28,8 @@ const otpgenerate = async (req,res) =>{
        let users = new User({
             user_email:userEmail
         })
+        response = await sendotpmail(users);
         const newuser= await users.save();
-        response = await sendotpmail(user);
         return successResponse(200, messages.success.OTP_CREATED, response); 
         // return successResponse(404, messages.success.NO_USER_FOUND, {});
     } else {
