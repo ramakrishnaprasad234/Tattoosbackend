@@ -22,6 +22,12 @@ const medicineorder = require('../../controller/user/ordermedicine.js')
 // const Availabile = require('../../modules/availability.js');
 const addavailability = require('../../controller/addvailability.js')
 const shopavailability = require('../../controller/availability.js')
+const registerlab = require('../../controller/admin/addlabs.js')
+const bloodbank = require('../../controller/admin/addbloodbanks.js')
+const labsbycity = require('../../controller/user/labsbycity.js')
+const getsinglebloodbank = require ('../../controller/user/singlebloodbank.js')
+const getsinglelab = require('../../controller/user/getsinglelab.js')
+
  // router.post('/user/signup',signup)
 
  // router.post('/user/bill',bill)
@@ -133,5 +139,46 @@ const shopavailability = require('../../controller/availability.js')
      }) */
 
     router.post('/medicinesin/shop',shopavailability)
+
+    router.post('/lab/register',  async(req,res)=>{
+      let response;
+      try{
+          response = await registerlab(req,res);
+          return res.status(201).json(response);
+      }
+   catch(error){
+      console.log(error) 
+      return res.status(500).json(errorResponse(500, messages.error.WRONG))
+   }
+  })
+
+  router.post('/register/bloodbank',bloodbank)
+
+
+  router.get('/getlabsbycity',async(req,res)=>{
+    let response
+    try{
+      response = await labsbycity(req);
+      return res.status(response.code).json(response);
+    }
+    catch(error){
+     console.log(error)
+    }
+  })
+
+  router.get('/get/bloodnaks/bycity',async(req,res)=>{
+    let response
+    try{
+      response = await labsbycity(req);
+      return res.status(response.code).json(response);
+    }
+    catch(error){
+     console.log(error)
+    }
+  })
+
+  router.get('/get/single/bloodbank',getsinglebloodbank)
+  router.get('/get/single/lab',getsinglelab)
+
 
 module.exports = router
