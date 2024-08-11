@@ -19,6 +19,9 @@ const allmedicines = require('../../controller/user/allmedicines.js')
 const singlemedicine = require('../../controller/user/singlemedicine.js')
 const getallshops = require('../../controller/user/getallshops.js')
 const medicineorder = require('../../controller/user/ordermedicine.js')
+// const Availabile = require('../../modules/availability.js');
+const addavailability = require('../../controller/addvailability.js')
+const shopavailability = require('../../controller/availability.js')
  // router.post('/user/signup',signup)
 
  // router.post('/user/bill',bill)
@@ -110,8 +113,25 @@ const medicineorder = require('../../controller/user/ordermedicine.js')
 
    router.get('/order',medicineorder)
 
+
+   router.post('/availbility',addavailability)
+
+  //  router.get('/shop/:shopid/medicines', async (req,res)=>{
+  //   try{
+  //     const availabilemedcine = await Availabile.find({shop:req.params.shopid,available:true})
+  //     .populate('medicine');
+  //     res.json(availabilemedcine);
+  //   }
+  //   catch(err){
+  //     console.log(err)
+  //     res.json({message:err.message})
+  //   }
+  //  })
+
    /*  router.post('/generateotp',otpvalidator,async(req,res)=>{
         
      }) */
+
+    router.post('/medicinesin/shop',shopavailability)
 
 module.exports = router
