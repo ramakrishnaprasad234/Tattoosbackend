@@ -6,9 +6,10 @@ const app = express();
 const mongodb = require('./database/database')
 const bodyparser = require('body-parser')
 const cors = require('cors')
+const cookies= require('cookie-parser')
 const admin = require("./routes/Admin/route")
 require("dotenv").config();
-
+app.use(cookies())
 // Ensure the path is correct
     mongodb.createDbConnection()
 

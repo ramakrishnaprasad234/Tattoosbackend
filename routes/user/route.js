@@ -25,8 +25,10 @@ const shopavailability = require('../../controller/availability.js')
 const registerlab = require('../../controller/admin/addlabs.js')
 const bloodbank = require('../../controller/admin/addbloodbanks.js')
 const labsbycity = require('../../controller/user/labsbycity.js')
+const bloodbanksbycity = require('../../controller/user/bloodbaksbycity.js')
 const getsinglebloodbank = require ('../../controller/user/singlebloodbank.js')
 const getsinglelab = require('../../controller/user/getsinglelab.js')
+const getuserdetails = require('../../controller/user/getuserdetails.js')
 
  // router.post('/user/signup',signup)
 
@@ -169,7 +171,7 @@ const getsinglelab = require('../../controller/user/getsinglelab.js')
   router.get('/get/bloodnaks/bycity',async(req,res)=>{
     let response
     try{
-      response = await labsbycity(req);
+      response = await bloodbanksbycity(req);
       return res.status(response.code).json(response);
     }
     catch(error){
@@ -179,6 +181,8 @@ const getsinglelab = require('../../controller/user/getsinglelab.js')
 
   router.get('/get/single/bloodbank',getsinglebloodbank)
   router.get('/get/single/lab',getsinglelab)
+
+  router.get('/getuser/details',getuserdetails)
 
 
 module.exports = router
