@@ -47,7 +47,7 @@ const verifyotp = async (req, res) => {
 
                     console.log('Token generated, sending response');
                     res.cookie('token', token, cookies);
-                    return {code: 200, message: messages.success.USER_VERIFIED, data: {token:token}}
+                    return {code: 200, message: messages.success.USER_VERIFIED, data: {user:user,token:token}}
                     
 
                 } else {

@@ -6,7 +6,7 @@ const messages = require('../../utils/constant')
 const location = require('../../controller/admin/nearbyshop')
 const medicineprice= require('../../controller/admin/medicineprice')
 const { successResponse, errorResponse } = require('../../utils/response')
-
+const addlabtest = require('../../controller/user/addlabservices')
 router.post('/addshop',  async(req,res)=>{
     let response;
     try{
@@ -44,6 +44,8 @@ router.post('/addshop',  async(req,res)=>{
             return res.status(500).json(errorResponse(500, messages.error.WRONG))
          }
       })
+
+      router.post('/getuser/details',addlabtest)
 
    /*router.post('/nearbyshops', async(req,res) =>{
  let response;

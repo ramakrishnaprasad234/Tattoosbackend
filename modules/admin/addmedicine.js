@@ -20,6 +20,10 @@ const medicineSchema = new schema({
     type:String,
     required:true,
  },
+ medicine_price:{
+   type:Number,
+   required:true,
+ },
  medicine_manufacture:{
     type:String,
     required:true,

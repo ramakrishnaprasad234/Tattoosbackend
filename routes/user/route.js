@@ -29,6 +29,8 @@ const bloodbanksbycity = require('../../controller/user/bloodbaksbycity.js')
 const getsinglebloodbank = require ('../../controller/user/singlebloodbank.js')
 const getsinglelab = require('../../controller/user/getsinglelab.js')
 const getuserdetails = require('../../controller/user/getuserdetails.js')
+const getlabservices = require('../../controller/user/getlabservices.js')
+const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/user/cartdetails.js')
 
  // router.post('/user/signup',signup)
 
@@ -181,8 +183,9 @@ const getuserdetails = require('../../controller/user/getuserdetails.js')
 
   router.get('/get/single/bloodbank',getsinglebloodbank)
   router.get('/get/single/lab',getsinglelab)
-
-  router.get('/getuser/details',getuserdetails)
-
-
+  router.get('/get/lab/services',getlabservices)
+  router.post('/cart/details',cartcontroller)  
+  router.get('/cart/:user_uuid',cart)
+  router.delete('/cart/:user_uuid/:medicine_uuid',deleteitem)
+  router.put('/put/cartquantity/:user_uuid',cartquantity)
 module.exports = router
