@@ -31,11 +31,51 @@ const getsinglelab = require('../../controller/user/getsinglelab.js')
 const getuserdetails = require('../../controller/user/getuserdetails.js')
 const getlabservices = require('../../controller/user/getlabservices.js')
 const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/user/cartdetails.js')
-
+const axios = require('axios')
  // router.post('/user/signup',signup)
 
  // router.post('/user/bill',bill)
 //  ,registraionvalidator
+
+const googleapikey = AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M
+
+
+  router.post('/geocode',async (req,res)=>{
+    const {adress}= req.body;
+    try{
+      const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`,{
+        params:{
+          adress,
+          key:googleapikey
+        }
+      });
+      res.json(response.data)
+
+    }
+    catch(err){
+      res.status(500).send(err.message)
+    }
+  })
+
+
+  router.post('/directions',async (req,res)=>{
+    const {origin,destination}= req.body
+    try{
+      const response = await axios.get(`https://maps.googleapis.com/maps/api/directions/json`,{
+        params:{
+          origin,
+          destination,
+          key:googleapikey
+        }
+      })
+      res.json(response.data);
+    }
+    catch(error){
+      res.status(500).send(error.message)
+    }
+  })
+
+
 
    router.post('/register' ,registraionvalidator , async (req,res)=>{
         try{
@@ -180,7 +220,7 @@ const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/
      console.log(error)
     }
   })
-
+  router.get('/get/userdetails',getuserdetails)
   router.get('/get/single/bloodbank',getsinglebloodbank)
   router.get('/get/single/lab',getsinglelab)
   router.get('/get/lab/services',getlabservices)
@@ -188,4 +228,6 @@ const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/
   router.get('/cart/:user_uuid',cart)
   router.delete('/cart/:user_uuid/:medicine_uuid',deleteitem)
   router.put('/put/cartquantity/:user_uuid',cartquantity)
+
+
 module.exports = router
