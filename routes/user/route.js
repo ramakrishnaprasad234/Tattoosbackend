@@ -32,12 +32,46 @@ const getuserdetails = require('../../controller/user/getuserdetails.js')
 const getlabservices = require('../../controller/user/getlabservices.js')
 const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/user/cartdetails.js')
 const axios = require('axios')
+const neworder = require('../../controller/user/neworder.js')
+const orderschema = require('../../modules/order.js')
+// const cors = require('cors')
+// const http = require('http')
+// const socketio = require('socket.io')
+// const app = route()
+// app.use(cors())
+// app.use(route.static('public'))
+// const server = http.createServer(app)
+
+// const io = socketio(server)
+
+// const io = socketio(server, {
+//   cors: {
+//       origin: "file:///D:/mine/medicineapp/socketio/socketio.html", // Replace with your frontend URL
+//       methods: ["GET", "POST"]
+//   }
+// });
+
+
+
+// io.on('connection',(socket)=>{
+//   console.log('shop is connected');
+
+//   orderschema.watch().on('change',(change)=>{
+//     if(change.operationType === 'insert'){
+//       const orderdata = change.fullDocument;
+//       console.log(orderdata)
+//       socket.emit('neworder',orderdata)
+//     }
+//   })
+
+// })
+
  // router.post('/user/signup',signup)
 
  // router.post('/user/bill',bill)
 //  ,registraionvalidator
 
-const googleapikey = AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M
+const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
 
 
   router.post('/geocode',async (req,res)=>{
@@ -59,6 +93,7 @@ const googleapikey = AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M
 
 
   router.post('/directions',async (req,res)=>{
+    console.log('coming')
     const {origin,destination}= req.body
     try{
       const response = await axios.get(`https://maps.googleapis.com/maps/api/directions/json`,{
@@ -228,6 +263,6 @@ const googleapikey = AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M
   router.get('/cart/:user_uuid',cart)
   router.delete('/cart/:user_uuid/:medicine_uuid',deleteitem)
   router.put('/put/cartquantity/:user_uuid',cartquantity)
-
+  router.post('/create/order',neworder)
 
 module.exports = router

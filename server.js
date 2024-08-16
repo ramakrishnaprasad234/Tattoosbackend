@@ -8,6 +8,9 @@ const bodyparser = require('body-parser')
 const cors = require('cors')
 const cookies= require('cookie-parser')
 const admin = require("./routes/Admin/route")
+const http=require('http')
+const socketio = require('socket.io')
+const Order =require('./modules/order')
 require("dotenv").config();
 app.use(cookies())
 // Ensure the path is correct
@@ -22,6 +25,29 @@ app.use(cookies())
     app.use(bodyparser.urlencoded({extended:true}))
    app.use(cors());
     //app.use(express.json());
+
+    const server = http.createServer(app)
+
+    const io = socketio(server);
+
+    io.on('connection',(socket)=>{
+        console.log('A shop has connected')
+
+        socket.on('joinshop',(shopid)=>{
+            socket.join(shopid);
+            console.log('shop has connected')
+        })
+
+        Order.watch().on('change',(change)=>{
+            if(change.operationType==='insert'){
+                const orderData = change.fullDocument;
+            const shopId = orderData.shopId; 
+
+            io.to(shopId).emit('newOrder', orderData);
+            }
+        })
+    })
+
 
    app.use('/admin',admin)
    

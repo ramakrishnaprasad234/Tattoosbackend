@@ -7,6 +7,8 @@ const location = require('../../controller/admin/nearbyshop')
 const medicineprice= require('../../controller/admin/medicineprice')
 const { successResponse, errorResponse } = require('../../utils/response')
 const addlabtest = require('../../controller/user/addlabservices')
+const {shopslogin,shopgetorders} = require('../../controller/admin/shopslogin')
+
 router.post('/addshop',  async(req,res)=>{
     let response;
     try{
@@ -46,6 +48,9 @@ router.post('/addshop',  async(req,res)=>{
       })
 
       router.post('/getuser/details',addlabtest)
+
+      router.post('/shop/login',shopslogin)
+      router.get('/shop/getorders/:shop_uuid',shopgetorders)
 
    /*router.post('/nearbyshops', async(req,res) =>{
  let response;
