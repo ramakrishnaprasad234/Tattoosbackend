@@ -1,6 +1,8 @@
 
 const shops = require('../../modules/admin/addshop')
 const Orders = require('../../modules/order')
+const jwt = require('jsonwebtoken')
+
 const shopslogin = async (req,res)=>{
     const{shopusername,password}=req.body
 
@@ -11,9 +13,23 @@ const shopslogin = async (req,res)=>{
     })
 
     if(user){
+
+        const payload={
+            id:user._id,
+            email:user.shop_email
+        }
+        const token = jwt.sign(payload, "njdiadkmjolsaxLKmoicas", {expiresIn:'60d'})
+
+        const cookies ={
+            http:true,
+            secure:true
+        }
+        res.cookie('token',token,cookies)
+
         res.status(200).json({
             message:'login successfull',
-            data:user
+            data:user,
+            token:token
         })
     }
     else{

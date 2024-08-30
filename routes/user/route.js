@@ -34,6 +34,9 @@ const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/
 const axios = require('axios')
 const neworder = require('../../controller/user/neworder.js')
 const orderschema = require('../../modules/order.js')
+const medicinesearch = require('../../controller/user/medicinesearch.js')
+
+
 // const cors = require('cors')
 // const http = require('http')
 // const socketio = require('socket.io')
@@ -264,5 +267,9 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.delete('/cart/:user_uuid/:medicine_uuid',deleteitem)
   router.put('/put/cartquantity/:user_uuid',cartquantity)
   router.post('/create/order',neworder)
+
+  router.get('/medicine/search',medicinesearch)
+
+
 
 module.exports = router

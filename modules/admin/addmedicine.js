@@ -47,7 +47,7 @@ const medicineSchema = new schema({
 
 })
 
-
+medicineSchema.index({medicie_name:'text'})
 
 
    
