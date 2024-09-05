@@ -44,13 +44,7 @@ const {Upload} = require('@aws-sdk/lib-storage')
 const path = require('path')
 require("dotenv").config();
 
-// aws.config.update({
-//   accessKeyId:'AKIAZ5TC4YAJQS366QXZ',
-//   secretAccessKey:'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',
-//   region:'ap-south-1'
-// })
 
-// const s3 = new aws.S3();
 
 const storage = multer.memoryStorage();
 const upload = multer({storage})
@@ -125,7 +119,7 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
     const {adress}= req.body;
     try{
       const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`,{
-        params:{
+        params:{  
           adress,
           key:googleapikey
         }
