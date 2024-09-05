@@ -35,6 +35,50 @@ const axios = require('axios')
 const neworder = require('../../controller/user/neworder.js')
 const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
+const priscription = require('../../modules/uploadpriscription.js')
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multers3 = require('multer-s3')
+const { S3Client}= require('@aws-sdk/client-s3');
+const {Upload} = require('@aws-sdk/lib-storage')
+const path = require('path')
+
+
+// aws.config.update({
+//   accessKeyId:'AKIAZ5TC4YAJQS366QXZ',
+//   secretAccessKey:'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',
+//   region:'ap-south-1'
+// })
+
+// const s3 = new aws.S3();
+
+const storage = multer.memoryStorage();
+const upload = multer({storage})
+
+const s3Client = new S3Client({
+  region:'ap-south-1',
+  credentials:{
+    accessKeyId:'AKIAZ5TC4YAJQS366QXZ',
+    secretAccessKey:'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'
+  },
+})
+
+
+
+// const upload = multer({
+//     storage:multers3({
+//       s3,
+//       bucket:'s.p.medicine.images',
+//       acl:'public-read',
+//       // metadata:(req,file,cb)=>{
+//       //   cb(null,{fieldName:file.fieldname});
+//       // },
+//       key:(req,file,cb)=>{
+//         cb(null, Date.now().toString() + '-'+ file.originalname);
+//       },
+//     }),
+// });
+
 
 
 // const cors = require('cors')
@@ -269,7 +313,58 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.post('/create/order',neworder)
 
   router.get('/medicine/search',medicinesearch)
+  router.post('/upload',upload.single('file'),async(req,res)=>{
+    if(!req.file){
+      return res.status(400).json({
+        error:'No file uploaded'
+      })
+    }
 
+    try{
+
+      const fileName = path.basename(req.file.originalname)
+      const bucketname = 's.p.medicine.images'
+      const uploadparams = {
+
+        client:s3Client,
+        params:{
+          Bucket:bucketname,
+          Key:fileName,
+          Body:req.file.buffer,
+          ContentType:req.file.mimetype,
+        },
+      };
+
+      const upload = new Upload(uploadparams)
+      await upload.done();
+
+      // const fileurl = `https://${bucketname}.s3.${s3Client.config.credentials.region}.a.amazonaws.com/${}mazonaws.com/${fileName}`;
+      // const fileurl =  `https://${bucketname}.s3.amazonaws.com/${fileName}`
+      const fileurl = `https://s3.ap-south-1.amazonaws.com/${bucketname}/${fileName}`
+
+      const newpriscription=new priscription({
+        user_uuid:'f1b3e696-493e-48ad-9a5c-26284a58270a',
+        s3url:fileurl
+      }) 
+
+      await newpriscription.save();
+
+      res.status(200).json({
+        message:'file uploaded successfully',
+        fileurl,
+      })
+
+    }
+
+    catch(error){   
+      console.log(error)
+      res.status(500).json({
+        message:'uploading message failed'
+      })
+    }
+
+
+  })
 
 
 module.exports = router
