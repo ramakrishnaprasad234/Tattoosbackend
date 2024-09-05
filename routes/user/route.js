@@ -42,7 +42,7 @@ const multers3 = require('multer-s3')
 const { S3Client}= require('@aws-sdk/client-s3');
 const {Upload} = require('@aws-sdk/lib-storage')
 const path = require('path')
-
+require("dotenv").config();
 
 // aws.config.update({
 //   accessKeyId:'AKIAZ5TC4YAJQS366QXZ',
@@ -58,8 +58,8 @@ const upload = multer({storage})
 const s3Client = new S3Client({
   region:'ap-south-1',
   credentials:{
-    accessKeyId:'AKIAZ5TC4YAJQS366QXZ',
-    secretAccessKey:'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'
+    accessKeyId:process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
   },
 })
 
