@@ -3,14 +3,14 @@ const medicineschema= require('../../modules/admin/addmedicine')
 
 
 const cartcontroller = async(req,res)=>{
- const{user_uuid,medicine_uuid,quantity}= req.body
+ const{user_uuid,medicine_uuid,quantity,shop_uuid}= req.body
  let usercart = await cartschema.findOne({
     user_uuid:user_uuid
  })
 
     
      if (!usercart) {
-      usercart = new cartschema({ user_uuid, items: [], totalitems: 0, totalPrice: 0 });
+      usercart = new cartschema({ user_uuid,shop_uuid, items: [], totalitems: 0, totalPrice: 0 });
     }
 
     const existingitem = usercart.items.find(item => item.medicine_uuid===medicine_uuid)

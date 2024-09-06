@@ -1,6 +1,8 @@
 
 
 const mongoose = require('mongoose')
+
+
 const { v4: uuidv4 } = require('uuid');
 
 const order = new mongoose.Schema({
@@ -8,8 +10,9 @@ const order = new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
-        default:uuidv4()
+        
     },
+    status:{type:String, default:'pending'},
     user_uuid:{
         type:String,
         required:true

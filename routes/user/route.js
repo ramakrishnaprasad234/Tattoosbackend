@@ -32,7 +32,7 @@ const getuserdetails = require('../../controller/user/getuserdetails.js')
 const getlabservices = require('../../controller/user/getlabservices.js')
 const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/user/cartdetails.js')
 const axios = require('axios')
-const neworder = require('../../controller/user/neworder.js')
+const {neworder,orderaccept,rejectorder} = require('../../controller/user/neworder.js')
 const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
@@ -305,7 +305,8 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.delete('/cart/:user_uuid/:medicine_uuid',deleteitem)
   router.put('/put/cartquantity/:user_uuid',cartquantity)
   router.post('/create/order',neworder)
-
+  router.post('/order/status/accept',orderaccept)
+  router.post('/order/status/rejected',rejectorder)
   router.get('/medicine/search',medicinesearch)
   router.post('/upload',upload.single('file'),async(req,res)=>{
     if(!req.file){

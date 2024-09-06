@@ -1,8 +1,13 @@
 
+
 const mongoose = require('mongoose')
 
 const cartschema = new mongoose.Schema({
     user_uuid:{
+        type:String,
+        required:true
+    },
+    shop_uuid:{
         type:String,
         required:true
     },
