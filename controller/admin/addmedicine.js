@@ -9,6 +9,7 @@ const addmedicine = async(req,res)=>{
     const medicine = new medicines({
       medicine_uuid:uuidv4(),
       medicie_name:req.body.medicinename,
+      imgurl:req.body.imgurl,
       medicine_discription:req.body.medicinediscription,
       medicine_price:req.body.medicineprice,
       medicine_manufacture:req.body.manufacture,

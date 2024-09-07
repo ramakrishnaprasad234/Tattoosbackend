@@ -30,9 +30,9 @@ const Availability = async (req,res)=>{
                     is_available: 1,
                     quantity: 1,
                     medicine_details: {
-                        
                         medicie_name: 1,
                         medicine_discription: 1,
+                        imgurl:1,
                         medicine_manufacture: 1,
                         medicine_category: 1,
                         medicine_strenght: 1,

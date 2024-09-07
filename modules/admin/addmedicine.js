@@ -16,6 +16,10 @@ const medicineSchema = new schema({
     type:String,
     required:true,
  },
+ imgurl:{
+   type:String,
+   required:true
+ },
  medicine_discription:{
     type:String,
     required:true,
