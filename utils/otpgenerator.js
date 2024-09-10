@@ -5,6 +5,8 @@ const nodemailer = require('nodemailer')
 const Mailgen = require('mailgen')
 require('dotenv').config();
 const {Email,PASSWORD} = require('../routes/env.js')
+const {v4: uuidv4} = require('uuid'); 
+
 
 const otpgeneratorr = async (user) =>{
   
@@ -43,8 +45,9 @@ const otpgeneratorr = async (user) =>{
               await existingOtp.save()
           }
       } else {
+        const generateduuid=uuidv4() 
           // creating new otp
-          const newOtp = new Otpmodel({ otp_number: otp, otp_user_uuid: user.user_uuid, otp_expireAt: Date.now() + 180000, otp_count: 0 });
+          const newOtp = new Otpmodel({  otp_uuid:generateduuid, otp_number: otp, otp_user_uuid: user.user_uuid, otp_expireAt: Date.now() + 180000, otp_count: 0 });
           await newOtp.save();
       }
         

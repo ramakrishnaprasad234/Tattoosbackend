@@ -8,6 +8,8 @@ const medicineprice= require('../../controller/admin/medicineprice')
 const { successResponse, errorResponse } = require('../../utils/response')
 const addlabtest = require('../../controller/user/addlabservices')
 const {shopslogin,shopgetorders} = require('../../controller/admin/shopslogin')
+const addtest = require('../../controller/admin/addtest')
+
 
 router.post('/addshop',  async(req,res)=>{
     let response;
@@ -51,6 +53,7 @@ router.post('/addshop',  async(req,res)=>{
 
       router.post('/shop/login',shopslogin)
       router.get('/shop/getorders/:shop_uuid',shopgetorders)
+      router.post('/addtest',addtest)
 
    /*router.post('/nearbyshops', async(req,res) =>{
  let response;

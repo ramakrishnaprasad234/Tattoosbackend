@@ -36,6 +36,9 @@ const {neworder,orderaccept,rejectorder} = require('../../controller/user/neword
 const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
+const {gettest,getprofile} = require('../../controller/user/gettest.js')
+
+
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multers3 = require('multer-s3')
@@ -308,6 +311,12 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.post('/order/status/accept',orderaccept)
   router.post('/order/status/rejected',rejectorder)
   router.get('/medicine/search',medicinesearch)
+  router.get('/get/test/:lab_uuid',gettest)
+  router.get('/get/profiles/:lab_uuid',getprofile)
+
+
+
+
   router.post('/upload',upload.single('file'),async(req,res)=>{
     if(!req.file){
       return res.status(400).json({
