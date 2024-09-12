@@ -4,7 +4,7 @@ const gettest = async(req,res)=>{
     try{
     const {lab_uuid}=req.params
 
-    const alltest = await Test.find({lab_uuid:lab_uuid,type:'Test'})
+    const alltest = await Test.find({lab_uuid:lab_uuid})
 
     return res.status(200).json({
         message:'successfull',
