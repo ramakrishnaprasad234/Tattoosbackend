@@ -30,13 +30,15 @@ const getsinglebloodbank = require ('../../controller/user/singlebloodbank.js')
 const getsinglelab = require('../../controller/user/getsinglelab.js')
 const getuserdetails = require('../../controller/user/getuserdetails.js')
 const getlabservices = require('../../controller/user/getlabservices.js')
-const {cartcontroller,cart,deleteitem,cartquantity} = require('../../controller/user/cartdetails.js')
+const {cartcontroller,cart,deleteitem,cartquantity,labcart, getlabcart, deletetest} = require('../../controller/user/cartdetails.js')
 const axios = require('axios')
 const {neworder,orderaccept,rejectorder} = require('../../controller/user/neworder.js')
 const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
 const {gettest,getprofile} = require('../../controller/user/gettest.js')
+
+
 
 
 const aws = require('aws-sdk');
@@ -313,9 +315,9 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.get('/medicine/search',medicinesearch)
   router.get('/get/test/:lab_uuid',gettest)
   router.get('/get/profiles/:lab_uuid',getprofile)
-
-
-
+  router.post('/cart/labcart',labcart)
+  router.get('/get/labcart/:user_uuid',getlabcart)
+  router.get('/delete/labtest/:user_uuid/:test_uuid',deletetest)
 
   router.post('/upload',upload.single('file'),async(req,res)=>{
     if(!req.file){
