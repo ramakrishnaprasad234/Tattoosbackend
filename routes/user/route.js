@@ -37,7 +37,7 @@ const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
 const {gettest,getprofile} = require('../../controller/user/gettest.js')
-
+const {usercreateAdress,getuseradress,useradressupdate,useradressdelete} = require('../../controller/user/userlocation.js')
 
 
 
@@ -318,6 +318,18 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.post('/cart/labcart',labcart)
   router.get('/get/labcart/:user_uuid',getlabcart)
   router.get('/delete/labtest/:user_uuid/:test_uuid',deletetest)
+  router.post('/save/address',usercreateAdress)
+  router.get('/get/userlocation/:user_uuid',getuseradress)
+  router.put('/update/location',useradressupdate)
+  router.delete('/delete/location/:user_uuid',useradressdelete)
+
+
+
+
+
+
+
+
 
   router.post('/upload',upload.single('file'),async(req,res)=>{
     if(!req.file){
