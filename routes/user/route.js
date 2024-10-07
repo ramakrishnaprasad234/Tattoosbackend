@@ -38,6 +38,8 @@ const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
 const {gettest,getprofile} = require('../../controller/user/gettest.js')
 const {usercreateAdress,getuseradress,useradressupdate,useradressdelete} = require('../../controller/user/userlocation.js')
+const allsearchengine = require('../../controller/user/allsearchengine.js')
+
 
 
 
@@ -322,7 +324,7 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.get('/get/userlocation/:user_uuid',getuseradress)
   router.put('/update/location',useradressupdate)
   router.delete('/delete/location/:user_uuid',useradressdelete)
-
+  router.get('/allitems/search',allsearchengine)
 
 
 
@@ -377,11 +379,59 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
     catch(error){   
       console.log(error)
       res.status(500).json({
-        message:'uploading message failed'
+        message:'uploading message failed',
+        error:error
       })
     }
+  })
 
 
+  router.post('/direct/upload/priscripiton',upload.single('file'),async(req,res)=>{
+    if(!req.file){
+      return res.status(400).json({
+        error:'No file uploaded'
+      })
+    }
+    try{
+      const fileName = path.basename(req.file.originalname)
+      const bucketname = 's.p.medicine.images'
+      const uploadparams = {
+
+        client:s3Client,
+        params:{
+          Bucket:bucketname,
+          Key:fileName,
+          Body:req.file.buffer,
+          ContentType:req.file.mimetype,
+        },
+      };
+
+      const upload = new Upload(uploadparams)
+      await upload.done();
+
+      // const fileurl = `https://${bucketname}.s3.${s3Client.config.credentials.region}.a.amazonaws.com/${}mazonaws.com/${fileName}`;
+      // const fileurl =  `https://${bucketname}.s3.amazonaws.com/${fileName}`
+      const fileurl = `https://s3.ap-south-1.amazonaws.com/${bucketname}/${fileName}`
+
+      const newpriscription=new priscription({
+        user_uuid:'f1b3e696-493e-48ad-9a5c-26284a58270a',
+        s3url:fileurl
+      }) 
+
+      await newpriscription.save();
+
+      res.status(200).json({
+        message:'file uploaded successfully',
+        fileurl,
+      })
+
+    }
+    catch(error){
+      res.status(500).json({
+        message:'server error',
+        error:error
+      })
+    }
   })
 
 
