@@ -113,4 +113,32 @@ const getuseradress = async(req,res)=>{
         }
     }
 
-module.exports ={usercreateAdress,getuseradress,useradressupdate,useradressdelete}
+    const usersavedaddress = async (req,res)=>{
+        try{
+            const{user_uuid} = req.params
+
+            const savedaddress = await userLocationSchema.find({user_uuid:user_uuid})
+
+            if(!savedaddress){
+                return res.status(400).json({
+                    message:'No saved adress'
+                })
+            }
+            return res.status(200).json({
+                message:'successfull',
+                data:savedaddress
+            })
+        }
+
+        catch(error){
+            res.status(500).json({
+                message:'server error',
+                error:error
+            })
+        }
+       
+
+
+    } 
+
+module.exports ={usercreateAdress,getuseradress,useradressupdate,useradressdelete,usersavedaddress}

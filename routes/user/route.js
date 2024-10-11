@@ -37,9 +37,8 @@ const orderschema = require('../../modules/order.js')
 const medicinesearch = require('../../controller/user/medicinesearch.js')
 const priscription = require('../../modules/uploadpriscription.js')
 const {gettest,getprofile} = require('../../controller/user/gettest.js')
-const {usercreateAdress,getuseradress,useradressupdate,useradressdelete} = require('../../controller/user/userlocation.js')
+const {usercreateAdress,getuseradress,useradressupdate,useradressdelete,usersavedaddress} = require('../../controller/user/userlocation.js')
 const allsearchengine = require('../../controller/user/allsearchengine.js')
-
 
 
 
@@ -325,7 +324,7 @@ const googleapikey = 'AIzaSyDGGLHzd6fhzFl2PUn7qrqAUFoVLViY66M'
   router.put('/update/location',useradressupdate)
   router.delete('/delete/location/:user_uuid',useradressdelete)
   router.get('/allitems/search',allsearchengine)
-
+  router.get('/saved/address/:user_uuid',usersavedaddress)
 
 
 
