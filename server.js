@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(bodyparser.json())
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb+srv://bandlaramakrishnaprasad234:Rama%401992@cluster0.vvnoc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(()=>{
     console.log("mongodb connected")
 }).catch((error)=>{
