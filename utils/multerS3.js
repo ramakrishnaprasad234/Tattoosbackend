@@ -6,15 +6,15 @@ const { S3 } = require('@aws-sdk/client-s3');
 const s3 = new S3({
   region: process.env.AWS_REGION || 'ap-south-1',
   credentials: {
-     accessKeyId: "",
-    secretAccessKey: ""
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ,
   },
 });
 
 // Configure multerS3 storage
 const storage = multerS3({
   s3: s3,
-  bucket: process.env.AWS_BUCKET_NAME || 'awstattoobucket',
+  bucket: process.env.AWS_BUCKET_NAME 
   metadata: function (req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },
