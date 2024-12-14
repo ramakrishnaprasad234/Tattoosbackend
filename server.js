@@ -1,54 +1,67 @@
-const express = require('express');
-  const approute = require("./routes/user/route")
-const app = express();
-const mongodb = require('./database/database');
-const bodyparser = require('body-parser');
-const cors = require('cors');
-const cookies = require('cookie-parser');
-const admin = require("./routes/Admin/route");
-const http = require('http');
-const socketio = require('socket.io');
-const Order = require('./modules/order');
-require("dotenv").config();
+const express = require('express')
+const dotenv = require('dotenv')
+const mongoose = require('mongoose')
+const bodyparser = require('body-parser')
+const registerRoute = require('./Routes/registrationrouters')
+const styleRoutes = require('./Routes/tattooStyleRoute')
+const bookingRoutes = require('./Routes/bookingroute')
+const tattooStyleRoutes = require('./Routes/tattooStyleRoute');
+const artistRoutes = require('./Routes/artistRoute');
+const designRoutes = require('./Routes/designRoutes')
+const tattooRoutes =require('./Routes/tattooRoutes')
+const contactRoutes = require('./Routes/contectroutes')
+const profileRoutes = require('./Routes/profileRoute')
+const cartRoutes = require('./Routes/Cartroutes')
+const cors = require('cors')
 
-app.use(cookies());
-mongodb.createDbConnection();
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+
+const app = express()
+
+const port = 5000
+
+dotenv.config()
+app.use(express.json());
+app.use(bodyparser.json())
 app.use(cors());
 
-const server = http.createServer(app);
-const io = socketio(server, {
-    cors: {
-        origin: '*',  // Set to your frontend origin or use '*'
-        methods: ['GET', 'POST']
-    }
-});
-
-io.on('connection', (socket) => {
-    console.log('A shop has connected');
-
-    socket.on('joinshop', (shopId) => {
-        socket.join(shopId);
-        console.log('Shop has connected to room:', shopId);
-    });
-
-    Order.watch().on('change', (change) => {
-        if (change.operationType === 'insert') {
-            const orderData = change.fullDocument;
-            const shopId = orderData.shop_uuid;
-            io.to(shopId).emit('newOrder', orderData);
-        }
-    });
-});
-
-app.use('/admin', admin);
-app.use('/api', approute);
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
+    console.log("mongodb connected")
+}).catch((error)=>{
+    console.log(`mongodb connection error ${error}`)
+})
 
 app.get('/', (req, res) => {
-    res.send("running server");
+  res.send('Welcome to the Tattoo API!');
 });
 
-server.listen(4000, () => {
-    console.log("Server started on port 4000");
-});
+// app.use('/auth', login);
+
+app.use('/register',registerRoute)
+
+app.use('/Login',registerRoute)
+
+app.use('/auth', registerRoute);
+
+app.use('/tattooStyles', tattooStyleRoutes);
+
+app.use('/artists', artistRoutes);
+
+app.use('/style', styleRoutes);
+
+app.use("/api/designs", designRoutes);
+
+app.use('/bookings', bookingRoutes);
+
+app.use('/api/tattoos', tattooRoutes);
+
+app.use('/api', contactRoutes);
+
+app.use('/pro',profileRoutes)
+
+app.use('/cart',cartRoutes)
+
+app.listen(port,(req,res)=>{
+    console.log("server connected successful")
+})
+
