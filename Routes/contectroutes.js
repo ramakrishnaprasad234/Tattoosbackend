@@ -1,5 +1,5 @@
 const express = require('express');
-const { createContact, getContacts } = require('../controllers/Contectcont');
+const { createContact, getContacts } = require('../Controllers/Contectcont.js');
 
 const router = express.Router();
 

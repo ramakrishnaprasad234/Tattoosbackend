@@ -1,7 +1,7 @@
 const Contact = require('../models/Contect');
 
 // Save a new contact message
-exports.createContact = async (req, res) => {
+const createContact = async (req, res) => {
     try {
         const { name, email,phone, message } = req.body;
         console.log(name, email,phone, message)
@@ -22,7 +22,7 @@ exports.createContact = async (req, res) => {
 };
 
 // Fetch all contact messages (for admin use)
-exports.getContacts = async (req, res) => {
+const getContacts = async (req, res) => {
     try {
         const contacts = await Contact.find();
         res.status(200).json(contacts);
@@ -31,3 +31,5 @@ exports.getContacts = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+module.exports = {createContact,getContacts}
