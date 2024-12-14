@@ -14,7 +14,7 @@ const s3 = new S3({
 // Configure multerS3 storage
 const storage = multerS3({
   s3: s3,
-  bucket: process.env.AWS_BUCKET_NAME 
+  bucket: process.env.AWS_BUCKET_NAME ,
   metadata: function (req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },
